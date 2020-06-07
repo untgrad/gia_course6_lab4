@@ -38,7 +38,7 @@ def main():
 
     # generate & send email report:
     sender = "automation@example.com"
-    receiver = "student-02-9b4ca355b2b2@example.com"
+    receiver = "{}@example.com".format(os.environ.get("USER"))
     subject = "Upload Completed - Online Fruit Store"
     body = "All fruits are uploaded to our website successfully. A detailed list is attached to this email."
     attachment = report_file
