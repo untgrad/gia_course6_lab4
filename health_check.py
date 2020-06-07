@@ -54,17 +54,17 @@ def main():
     alert = None
     if chkCPU():
         alert = "Error - CPU usage is over {}%".format(max_cpu_usage_perc)
-        sendAlert(alert)
     elif chkDisk():
         alert = "Error - Available disk space is less than {}%".format(
             max_disk_avail_perc
         )
-        sendAlert(alert)
     elif chkMem():
         alert = "Error - Available memory is less than {}MB".format(max_mem_avail_mb)
-        sendAlert(alert)
     elif chkNet():
         alert = "Error - localhost cannot be resolved to {}".format(chk_local_host_ip)
+
+    # alert if error raised:
+    if alert:
         sendAlert(alert)
     else:
         print("system ok")
