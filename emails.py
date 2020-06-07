@@ -5,22 +5,22 @@ import os.path
 import smtplib
 
 
-def generate_email(sender, recipient, subject, body, attachment_path=None):
+def generate_email(sender, receiver, subject, body, attachment=None):
     """Creates an email with an attachement."""
     # Basic Email formatting
     message = email.message.EmailMessage()
     message["From"] = sender
-    message["To"] = recipient
+    message["To"] = receiver
     message["Subject"] = subject
     message.set_content(body)
 
     # Process the attachment and add it to the email
-    if attachment_path:
-        attachment_filename = os.path.basename(attachment_path)
-        mime_type, _ = mimetypes.guess_type(attachment_path)
+    if attachment:
+        attachment_filename = os.path.basename(attachment)
+        mime_type, _ = mimetypes.guess_type(attachment)
         mime_type, mime_subtype = mime_type.split("/", 1)
 
-        with open(attachment_path, "rb") as ap:
+        with open(attachment, "rb") as ap:
             message.add_attachment(
                 ap.read(),
                 maintype=mime_type,

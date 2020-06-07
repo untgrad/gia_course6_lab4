@@ -14,7 +14,7 @@ text_files = [txt_dir + f for f in listdir(txt_dir) if f.endswith(".txt")]
 def getEntry(file):
     # get entry id & set image file name:
     entry_id = path.splitext(path.basename(file))[0]
-    image_name = entry_id + ".jpeg"
+    img_name = entry_id + ".jpeg"
 
     # read lines in file, assign to vars:
     with open(file) as f:
@@ -26,7 +26,7 @@ def getEntry(file):
 
     # set & return entry object:
     keys = ["name", "weight", "description", "image_name"]
-    vals = [name, weight, description, image_name]
+    vals = [name, weight, description, img_name]
     entry = dict(zip(keys, vals))
     return entry
 
@@ -38,4 +38,4 @@ for file in text_files:
     if response.ok:
         print("uploaded data")
     else:
-        print("error: {}".format(response.status_code))
+        print(f"error: {response.status_code}")

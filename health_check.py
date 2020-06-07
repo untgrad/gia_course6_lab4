@@ -12,7 +12,7 @@ chk_local_host_ip = "127.0.0.1"
 
 def chkCPU():
     """check if CPU usage % exceeds max threshold"""
-    cpu_usage_perc = psutil.cpu_percent(interval=5)
+    cpu_usage_perc = psutil.cpu_percent(interval=3)
     return cpu_usage_perc > max_cpu_usage_perc
 
 
@@ -25,9 +25,10 @@ def chkDisk():
 
 def chkMem():
     """check if Memory usage % exceeds max threshold"""
-    max_memory_avail = 2 ** 20 * max_mem_avail_mb
+    one_mb = 2 ** 20
+    max_mem_avail = one_mb * max_mem_avail_mb
     mem_avail = psutil.virtual_memory().available
-    return mem_avail < max_memory_avail
+    return mem_avail < max_mem_avail
 
 
 def chkNet():
@@ -38,12 +39,15 @@ def chkNet():
 
 def sendAlert(alert):
     """output alert error and send email"""
+    content = {
+        "sender": "automation@example.com",
+        "receiver": "student@example.com",
+        "subject": alert,
+        "body": "Please check your system and resolve the issue as soon as possible.",
+        "attachment": None,
+    }
     try:
-        sender = "automation@example.com"
-        receiver = "student@example.com"
-        subject = alert
-        body = "Please check your system and resolve the issue as soon as possible."
-        message = emails.generate_email(sender, receiver, subject, body)
+        message = emails.generate_email(**content)
         emails.send_email(message)
     except:
         print("unable to send alert email notification!")
@@ -57,15 +61,13 @@ def main():
     print("checking system resources")
     alert = None
     if chkCPU():
-        alert = "Error - CPU usage is over {}%".format(max_cpu_usage_perc)
+        alert = f"Error - CPU usage is over {max_cpu_usage_perc}%"
     elif chkDisk():
-        alert = "Error - Available disk space is less than {}%".format(
-            max_disk_avail_perc
-        )
+        alert = f"Error - Available disk space is less than {max_disk_avail_perc}%"
     elif chkMem():
-        alert = "Error - Available memory is less than {}MB".format(max_mem_avail_mb)
+        alert = f"Error - Available memory is less than {max_mem_avail_mb}MB"
     elif chkNet():
-        alert = "Error - localhost cannot be resolved to {}".format(chk_local_host_ip)
+        alert = f"Error - localhost cannot be resolved to {chk_local_host_ip}"
 
     # alert if error raised:
     if alert:

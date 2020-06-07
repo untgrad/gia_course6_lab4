@@ -37,12 +37,14 @@ def main():
     reports.generate_report(report_file, report_title, report_body)
 
     # generate & send email report:
-    sender = "automation@example.com"
-    receiver = "{}@example.com".format(os.environ.get("USER"))
-    subject = "Upload Completed - Online Fruit Store"
-    body = "All fruits are uploaded to our website successfully. A detailed list is attached to this email."
-    attachment = report_file
-    message = emails.generate_email(sender, receiver, subject, body, attachment)
+    content = {
+        "sender": "automation@example.com",
+        "receiver": "{}@example.com".format(os.environ.get("USER")),
+        "subject": "Upload Completed - Online Fruit Store",
+        "body": "All fruits are uploaded to our website successfully. A detailed list is attached to this email.",
+        "attachment": report_file,
+    }
+    message = emails.generate_email(**content)
     emails.send_email(message)
 
 
