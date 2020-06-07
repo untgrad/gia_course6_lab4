@@ -10,8 +10,8 @@ Once the task is complete, the supplier should be notified with an email that in
 Finally, in parallel to the automation running, we want to check the health of the system and send an email if something goes wrong.
 
 ### What you’ll do
-Write a script that summarizes and processes sales data into different categories
-Generate a PDF using Python
-Automatically send a PDF by email
-Write a script to check the health status of the system
+* Write a script that summarizes and processes sales data into different categories
+* Generate a PDF using Python
+* Automatically send a PDF by email
+* Write a script to check the health status of the system
 You'll have 120 minutes to complete this lab.
