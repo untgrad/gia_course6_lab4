@@ -14,4 +14,5 @@ Finally, in parallel to the automation running, we want to check the health of t
 * Generate a PDF using Python
 * Automatically send a PDF by email
 * Write a script to check the health status of the system
+
 You'll have 120 minutes to complete this lab.
