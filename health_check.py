@@ -38,14 +38,18 @@ def chkNet():
 
 def sendAlert(alert):
     """output alert error and send email"""
-    print(alert)
-    sender = "automation@example.com"
-    receiver = "student@example.com"
-    subject = alert
-    body = "Please check your system and resolve the issue as soon as possible."
-    message = emails.generate_email(sender, receiver, subject, body)
-    emails.send_email(message)
-    exit(1)
+    try:
+        sender = "automation@example.com"
+        receiver = "student@example.com"
+        subject = alert
+        body = "Please check your system and resolve the issue as soon as possible."
+        message = emails.generate_email(sender, receiver, subject, body)
+        emails.send_email(message)
+    except:
+        print("unable to send alert email notification!")
+    finally:
+        print(alert)
+        exit(1)
 
 
 def main():
