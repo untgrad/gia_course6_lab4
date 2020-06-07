@@ -7,7 +7,7 @@ import emails
 max_cpu_usage_perc = 80
 max_disk_avail_perc = 20
 max_mem_avail_mb = 500
-local_host_ip = "127.0.0.1"
+chk_local_host_ip = "127.0.0.1"
 
 
 def chkCPU():
@@ -31,18 +31,21 @@ def chkMem():
 
 
 def chkNet():
-    local_host_name = socket.gethostbyname("localhost")
-    return local_host_name != local_host_ip
+    """check if local host name resolves to local IP"""
+    local_host_ip = socket.gethostbyname("localhost")
+    return local_host_ip != chk_local_host_ip
 
 
 def sendAlert(alert):
+    """output alert error and send email"""
     print(alert)
     sender = "automation@example.com"
-    receiver = "student-02-9b4ca355b2b2@example.com"
+    receiver = "student@example.com"
     subject = alert
     body = "Please check your system and resolve the issue as soon as possible."
     message = emails.generate_email(sender, receiver, subject, body)
     emails.send_email(message)
+    exit(1)
 
 
 def main():
@@ -61,7 +64,7 @@ def main():
         alert = "Error - Available memory is less than {}MB".format(max_mem_avail_mb)
         sendAlert(alert)
     elif chkNet():
-        alert = "Error - localhost cannot be resolved to {}".format(local_host_ip)
+        alert = "Error - localhost cannot be resolved to {}".format(chk_local_host_ip)
         sendAlert(alert)
     else:
         print("system ok")
