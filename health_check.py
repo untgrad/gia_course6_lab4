@@ -76,5 +76,5 @@ def main():
         print('system ok')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
