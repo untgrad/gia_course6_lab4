@@ -5,16 +5,16 @@ import requests
 import json
 
 # set text dir:
-txt_dir = "supplier-data/descriptions/"
+txt_dir = 'supplier-data/descriptions/'
 
 # gather list of text files:
-text_files = [txt_dir + f for f in listdir(txt_dir) if f.endswith(".txt")]
+text_files = [txt_dir + f for f in listdir(txt_dir) if f.endswith('.txt')]
 
 # read text entry:
 def getEntry(file):
     # get entry id & set image file name:
     entry_id = path.splitext(path.basename(file))[0]
-    img_name = entry_id + ".jpeg"
+    img_name = entry_id + '.jpeg'
 
     # read lines in file, assign to vars:
     with open(file) as f:
@@ -22,20 +22,23 @@ def getEntry(file):
     name, weight, description = lines
 
     # reformat weight to integer:
-    weight = int(weight.replace(" lbs", ""))
+    weight = int(weight.replace(' lbs', ''))
 
     # set & return entry object:
-    keys = ["name", "weight", "description", "image_name"]
-    vals = [name, weight, description, img_name]
-    entry = dict(zip(keys, vals))
+    entry = {
+        'name': name,
+        'weight': weight,
+        'description': description,
+        'image_name': img_name
+    }
     return entry
 
 
-url = "http://localhost/fruits/"
+url = 'http://localhost/fruits/'
 for file in text_files:
     data = getEntry(file)
     response = requests.post(url, data=data)
     if response.ok:
-        print("uploaded data")
+        print('uploaded data')
     else:
-        print(f"error: {response.status_code}")
+        print(f'error: {response.status_code}')
